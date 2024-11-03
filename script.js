@@ -6,7 +6,7 @@ document.getElementById('inputForm').addEventListener('submit', async function(e
 
     try {
         // Replace 'https://your-backend-url.com/api/ask' with your actual backend URL
-        const response = await fetch('https://gpt-chat-f751b063bdd5.herokuapp.com', {
+        const response = await fetch(https://gpt-chat-f751b063bdd5.herokuapp.com, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
