@@ -5,14 +5,18 @@ document.getElementById('inputForm').addEventListener('submit', async function(e
     const outputDiv = document.getElementById('output');
 
     try {
-        // Replace 'https://your-backend-url.com/api/ask' with your actual backend URL
-        const response = await fetch(https://gpt-chat-f751b063bdd5.herokuapp.com, {
+        // Replace with your actual Render backend URL
+        const response = await fetch('https://gpt-backend-wlm2.onrender.com/api/ask', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ question: userInput })
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const data = await response.json();
         outputDiv.innerText = data.answer; // Display GPT response
