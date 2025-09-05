@@ -3,21 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask GPT</title>
+    <title>StanceQ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Logo Section -->
     <div class="logo-container">
-    <img src="https://i.postimg.cc/vTqCQjmt/logo-Stance-Q-small.png" alt="My Logo">
+        <img src="https://i.postimg.cc/vTqCQjmt/logo-Stance-Q-small.png" alt="My Logo">
     </div>
+
     <h1>Welcome to StanceQ!</h1>
+
+    <!-- Chatbot Form -->
     <form id="inputForm">
         <label for="userInput">Enter your text:</label><br>
         <input type="text" id="userInput" name="userInput" required><br><br>
         <button type="submit">Submit</button>
     </form>
-    <h2>Response:</h2>
-    <div id="output"></div>
-    <script src="script.js"></script>
+
+    <!-- GPT Response Container (hidden initially) -->
+    <div id="outputContainer" style="display:none;">
+        <h2>Response:</h2>
+        <div id="output"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const userInput = document.getElementById('userInput').value;
+            const outputDiv = document.getElementById('output');
+            const outputContainer = document.getElementById('outputContainer');
+
+            // Clear previous response and hide container
+            outputDiv.innerText = "";
+            outputContainer.style.display = "none";
+
+            try {
+                const response = await fetch('https://gpt-backend-wlm2.onrender.com/api/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: userInput })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                outputDiv.innerText = data.answer;        // Show GPT response
+                outputContainer.style.display = "block";  // Make container visible
+            } catch (error) {
+                console.error("Error:", error);
+                outputDiv.innerText = "An error occurred while processing your request.";
+                outputContainer.style.display = "block";
+            }
+        });
+    </script>
 </body>
 </html>
