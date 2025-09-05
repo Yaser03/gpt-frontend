@@ -29,6 +29,6 @@ button {
 
 /* Logo image styling */
 .logo-container img {
-  max-width: 250px;            /* Limit width so it scales nicely */
+  max-width: 300px;            /* Limit width so it scales nicely */
   height: auto;                /* Maintain aspect ratio */
 }
