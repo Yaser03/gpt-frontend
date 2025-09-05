@@ -20,3 +20,15 @@ button {
     font-size: 18px;
     color: #333;
 }
+/* Logo container styling */
+.logo-container {
+  text-align: center;          /* Center the logo horizontally */
+  padding: 20px;               /* Add space around the logo */
+  background-color: #f2f2f2;   /* Optional: background color */
+}
+
+/* Logo image styling */
+.logo-container img {
+  max-width: 200px;            /* Limit width so it scales nicely */
+  height: auto;                /* Maintain aspect ratio */
+}
