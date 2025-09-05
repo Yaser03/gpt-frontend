@@ -7,28 +7,50 @@ body {
 input[type="text"] {
     width: 70%;
     padding: 10px;
+    font-size: 16px;
 }
 
 button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
-}
 /* Logo container styling */
 .logo-container {
-  text-align: center;          /* Center the logo horizontally */
-  padding: 20px;               /* Add space around the logo */
-  background-color: #f2f2f2;   /* Optional: background color */
+    text-align: center;          /* Center the logo horizontally */
+    padding: 20px;               /* Add space around the logo */
+    background-color: #f2f2f2;   /* Optional: background color */
 }
 
 /* Logo image styling */
 .logo-container img {
-  max-width: 300px;            /* Limit width so it scales nicely */
-  height: auto;                /* Maintain aspect ratio */
+    max-width: 300px;            /* Limit width so it scales nicely */
+    height: auto;                /* Maintain aspect ratio */
+}
+
+/* GPT response container */
+#outputContainer {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;            /* Align text left inside the container */
+}
+
+#outputContainer h2 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #444;
+}
+
+#output {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
 }
