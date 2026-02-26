@@ -111,3 +111,7 @@ body {
 #userInput:read-only {
     background-color: #f1f3f5;
 }
+#userInput.is-locked {
+  background-color: #f1f3f5;
+  pointer-events: none;   /* prevents typing, pasting, selecting */
+}
