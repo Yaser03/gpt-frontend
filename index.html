@@ -23,7 +23,6 @@
 
     <!-- GPT Response Container (hidden initially) -->
     <div id="outputContainer" style="display:none;">
-        <h2>Response:</h2>
         <div id="output"></div>
     </div>
 
@@ -38,7 +37,7 @@ document.getElementById('inputForm').addEventListener('submit', async function(e
     const submitButton = document.querySelector('button[type="submit"]');
 
     // Show loading state
-    outputDiv.innerText = "Thinking... 🤖";
+    outputDiv.innerText = "StanceQ is working on your draft...";
     outputContainer.style.display = "block";
     submitButton.disabled = true;
 
