@@ -1,56 +1,56 @@
 document.getElementById('inputForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const textarea = document.getElementById('userInput');
-    const userInput = textarea.value;
+  const textarea = document.getElementById('userInput');
+  const userInput = textarea.value;
 
-    const outputDiv = document.getElementById('output');
-    const outputContainer = document.getElementById('outputContainer');
-    const submitButton = document.querySelector('#inputForm button[type="submit"]');
-    const responseTop = document.getElementById('responseTop'); // if you added the anchor
+  const outputDiv = document.getElementById('output');
+  const outputContainer = document.getElementById('outputContainer');
+  const submitButton = document.querySelector('#inputForm button[type="submit"]');
 
-    // Freeze the draft (still scrollable, not editable)
-    textarea.readOnly = true;
+  // ✅ HARD FREEZE (multiple layers)
+  textarea.readOnly = true;
+  textarea.setAttribute('readonly', 'readonly');
+  textarea.classList.add('is-locked');
+  textarea.blur();
 
-    // Show loading state + lock button
-    outputDiv.innerText = "StanceQ is analyzing your draft and generating feedback…";
-    outputContainer.style.display = "block";
-    submitButton.disabled = true;
+  // Show loading + lock submit
+  outputDiv.innerText = "StanceQ is analyzing your draft and generating feedback…";
+  outputContainer.style.display = "block";
+  submitButton.disabled = true;
 
-    // Smooth scroll to response section (after it becomes visible)
-    requestAnimationFrame(() => {
-        (responseTop || outputContainer).scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+  // Smooth scroll (after paint)
+  requestAnimationFrame(() => {
+    outputContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  try {
+    const response = await fetch('https://gpt-backend-wlm2.onrender.com/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: userInput })
     });
 
-    try {
-        const response = await fetch('https://gpt-backend-wlm2.onrender.com/api/ask', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: userInput })
-        });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    const data = await response.json();
+    outputDiv.innerText = data.answer;
 
-        const data = await response.json();
-        outputDiv.innerText = data.answer;
+  } catch (error) {
+    console.error("Error:", error);
+    outputDiv.innerText = "An error occurred while processing your request.";
+  } finally {
+    // Re-enable submit after 20s
+    setTimeout(() => {
+      submitButton.disabled = false;
 
-    } catch (error) {
-        console.error("Error:", error);
-        outputDiv.innerText = "An error occurred while processing your request.";
-    } finally {
-        // Re-enable after 20 seconds no matter what
-        setTimeout(() => {
-            submitButton.disabled = false;
+      // If you want the draft to remain locked permanently, leave it locked.
+      // If you want to unlock after 20 seconds, uncomment the lines below:
 
-            // ✅ Option A: unlock the textarea again after cooldown
-            textarea.readOnly = false;
+      // textarea.readOnly = false;
+      // textarea.removeAttribute('readonly');
+      // textarea.classList.remove('is-locked');
 
-            // ✅ Option B (permanent lock): delete the line above
-        }, 20000);
-    }
+    }, 20000);
+  }
 });
