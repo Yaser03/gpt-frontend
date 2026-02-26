@@ -108,3 +108,6 @@ body {
     color: #333;
     white-space: pre-wrap; /* preserves GPT formatting */
 }
+#userInput:read-only {
+    background-color: #f1f3f5;
+}
